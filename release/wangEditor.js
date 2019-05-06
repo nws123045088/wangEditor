@@ -4329,6 +4329,7 @@ UploadImg.prototype = {
     编辑器构造函数
 */
 
+console.log(11111111111);
 // id，累加
 var editorId = 1;
 
