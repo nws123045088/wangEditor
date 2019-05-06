@@ -2754,6 +2754,14 @@ Image.prototype = {
                     if ($img) {
                         $img.remove();
                     }
+                    // 清空当前点击过的图片
+                    editor._selectedImg = null;
+
+                    // 修改选区并 restore ，防止用户此时点击退格键，会删除其他内容
+                    editor.selection.createEmptyRange();
+                    editor.selection.collapseRange();
+                    editor.selection.restoreSelection();
+
                     // 返回 true，表示该事件执行完之后，panel 要关闭。否则 panel 不会关闭
                     return true;
                 }
@@ -2825,7 +2833,7 @@ Image.prototype = {
         }, // first tab end
         {
             title: '网络图片',
-            tpl: '<div>\n                    <input id="' + linkUrlId + '" type="text" class="block" placeholder="\u56FE\u7247\u94FE\u63A5" value="http://192.168.0.16:8080/static/733705e4/images/headshot.png"/></td>\n                    <div class="w-e-button-container">\n                        <button id="' + linkBtnId + '" class="right">\u63D2\u5165</button>\n                    </div>\n                </div>',
+            tpl: '<div>\n                    <input id="' + linkUrlId + '" type="text" class="block" placeholder="\u56FE\u7247\u94FE\u63A5"/></td>\n                    <div class="w-e-button-container">\n                        <button id="' + linkBtnId + '" class="right">\u63D2\u5165</button>\n                    </div>\n                </div>',
             events: [{
                 selector: '#' + linkBtnId,
                 type: 'click',
@@ -2872,6 +2880,7 @@ Image.prototype = {
         if (editor._selectedImg) {
             this._active = true;
             $elem.addClass('w-e-active');
+            this._createEditPanel();
         } else {
             this._active = false;
             $elem.removeClass('w-e-active');
@@ -4358,7 +4367,6 @@ UploadImg.prototype = {
     编辑器构造函数
 */
 
-console.log(11111111111);
 // id，累加
 var editorId = 1;
 

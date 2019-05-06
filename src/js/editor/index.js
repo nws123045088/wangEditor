@@ -12,7 +12,6 @@ import UploadImg from './upload/upload-img.js'
 import { arrForEach, objForEach } from '../util/util.js'
 import { getRandom } from '../util/util.js'
 
-console.log(11111111111)
 // id，累加
 let editorId = 1
 

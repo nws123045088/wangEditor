@@ -144,6 +144,14 @@ Image.prototype = {
                             if ($img) {
                                 $img.remove()
                             }
+                            // 清空当前点击过的图片
+                            editor._selectedImg = null
+
+                            // 修改选区并 restore ，防止用户此时点击退格键，会删除其他内容
+                            editor.selection.createEmptyRange()
+                            editor.selection.collapseRange()
+                            editor.selection.restoreSelection()
+
                             // 返回 true，表示该事件执行完之后，panel 要关闭。否则 panel 不会关闭
                             return true
                         }
@@ -229,7 +237,7 @@ Image.prototype = {
             {
                 title: '网络图片',
                 tpl: `<div>
-                    <input id="${linkUrlId}" type="text" class="block" placeholder="图片链接" value="http://192.168.0.16:8080/static/733705e4/images/headshot.png"/></td>
+                    <input id="${linkUrlId}" type="text" class="block" placeholder="图片链接"/></td>
                     <div class="w-e-button-container">
                         <button id="${linkBtnId}" class="right">插入</button>
                     </div>
@@ -283,6 +291,7 @@ Image.prototype = {
         if (editor._selectedImg) {
             this._active = true
             $elem.addClass('w-e-active')
+            this._createEditPanel()
         } else {
             this._active = false
             $elem.removeClass('w-e-active')
