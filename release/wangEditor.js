@@ -2675,17 +2675,22 @@ Image.prototype = {
         var editor = this.editor;
 
         // id
-        var width30 = getRandom('width-30');
-        var width50 = getRandom('width-50');
-        var width100 = getRandom('width-100');
+        var max30 = getRandom('max-30');
+        var max50 = getRandom('max-50');
+        var max100 = getRandom('max-100');
+
+        var width = getRandom('width');
+
+        var height = getRandom('height');
+
         var delBtn = getRandom('del-btn');
 
         // tab 配置
         var tabsConfig = [{
             title: '编辑图片',
-            tpl: '<div>\n                    <div class="w-e-button-container" style="border-bottom:1px solid #f1f1f1;padding-bottom:5px;margin-bottom:5px;">\n                        <span style="float:left;font-size:14px;margin:4px 5px 0 5px;color:#333;">\u6700\u5927\u5BBD\u5EA6\uFF1A</span>\n                        <button id="' + width30 + '" class="left">30%</button>\n                        <button id="' + width50 + '" class="left">50%</button>\n                        <button id="' + width100 + '" class="left">100%</button>\n                    </div>\n                    <div class="w-e-button-container">\n                        <button id="' + delBtn + '" class="gray left">\u5220\u9664\u56FE\u7247</button>\n                    </dv>\n                </div>',
+            tpl: '<div>\n                    <div class="w-e-button-container" style="border-bottom:1px solid #f1f1f1;padding-bottom:5px;margin-bottom:5px;">\n                        <div style="float:left;">\n                            <span style="font-size:14px;margin:4px 5px 0 5px;color:#333;">\u5BBD\u5EA6\uFF1A</span>\n                            <input id="' + width + '" class="left" style="width: 60px;border: 1px solid #eeeeee;height: 24px;"/>\n                        </div>\n                        <div style="float:right;">\n                            <span style="font-size:14px;margin:4px 5px 0 5px;color:#333;">\u9AD8\u5EA6\uFF1A</span>\n                            <input id="' + height + '" class="left" style="width: 60px;border: 1px solid #eeeeee;height: 24px;"/>\n                        </div>\n                    </div>\n                    <div class="w-e-button-container" style="border-bottom:1px solid #f1f1f1;padding-bottom:5px;margin-bottom:5px;">\n                        <span style="float:left;font-size:14px;margin:4px 5px 0 5px;color:#333;">\u6700\u5927\u5BBD\u5EA6\uFF1A</span>\n                        <button id="' + max30 + '" class="left">30%</button>\n                        <button id="' + max30 + '" class="left">50%</button>\n                        <button id="' + max30 + '" class="left">100%</button>\n                    </div>\n                    <div class="w-e-button-container">\n                        <button id="' + delBtn + '" class="gray left">\u5220\u9664\u56FE\u7247</button>\n                    </dv>\n                </div>',
             events: [{
-                selector: '#' + width30,
+                selector: '#' + max30,
                 type: 'click',
                 fn: function fn() {
                     var $img = editor._selectedImg;
@@ -2696,7 +2701,7 @@ Image.prototype = {
                     return true;
                 }
             }, {
-                selector: '#' + width50,
+                selector: '#' + max30,
                 type: 'click',
                 fn: function fn() {
                     var $img = editor._selectedImg;
@@ -2707,7 +2712,7 @@ Image.prototype = {
                     return true;
                 }
             }, {
-                selector: '#' + width100,
+                selector: '#' + max30,
                 type: 'click',
                 fn: function fn() {
                     var $img = editor._selectedImg;
@@ -2716,6 +2721,30 @@ Image.prototype = {
                     }
                     // 返回 true，表示该事件执行完之后，panel 要关闭。否则 panel 不会关闭
                     return true;
+                }
+            }, {
+                selector: '#' + width,
+                type: 'input propertychange',
+                fn: function fn() {
+                    var widthNum = $('#' + width).val();
+                    var $img = editor._selectedImg;
+                    if ($img) {
+                        $img.css('width', widthNum + 'px');
+                    }
+                    // 返回 true，表示该事件执行完之后，panel 要关闭。否则 panel 不会关闭
+                    return false;
+                }
+            }, {
+                selector: '#' + height,
+                type: 'input propertychange',
+                fn: function fn() {
+                    var heightNum = $('#' + height).val();
+                    var $img = editor._selectedImg;
+                    if ($img) {
+                        $img.css('height', heightNum + 'px');
+                    }
+                    // 返回 true，表示该事件执行完之后，panel 要关闭。否则 panel 不会关闭
+                    return false;
                 }
             }, {
                 selector: '#' + delBtn,
@@ -2796,7 +2825,7 @@ Image.prototype = {
         }, // first tab end
         {
             title: '网络图片',
-            tpl: '<div>\n                    <input id="' + linkUrlId + '" type="text" class="block" placeholder="\u56FE\u7247\u94FE\u63A5"/></td>\n                    <div class="w-e-button-container">\n                        <button id="' + linkBtnId + '" class="right">\u63D2\u5165</button>\n                    </div>\n                </div>',
+            tpl: '<div>\n                    <input id="' + linkUrlId + '" type="text" class="block" placeholder="\u56FE\u7247\u94FE\u63A5" value="http://192.168.0.16:8080/static/733705e4/images/headshot.png"/></td>\n                    <div class="w-e-button-container">\n                        <button id="' + linkBtnId + '" class="right">\u63D2\u5165</button>\n                    </div>\n                </div>',
             events: [{
                 selector: '#' + linkBtnId,
                 type: 'click',

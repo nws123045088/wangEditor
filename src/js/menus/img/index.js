@@ -38,9 +38,14 @@ Image.prototype = {
         const editor = this.editor
 
         // id
-        const width30 = getRandom('width-30')
-        const width50 = getRandom('width-50')
-        const width100 = getRandom('width-100')
+        const max30 = getRandom('max-30')
+        const max50 = getRandom('max-50')
+        const max100 = getRandom('max-100')
+
+        const width = getRandom('width')
+
+        const height = getRandom('height')
+
         const delBtn = getRandom('del-btn')
 
         // tab 配置
@@ -49,10 +54,20 @@ Image.prototype = {
                 title: '编辑图片',
                 tpl: `<div>
                     <div class="w-e-button-container" style="border-bottom:1px solid #f1f1f1;padding-bottom:5px;margin-bottom:5px;">
+                        <div style="float:left;">
+                            <span style="font-size:14px;margin:4px 5px 0 5px;color:#333;">宽度：</span>
+                            <input id="${width}" class="left" style="width: 60px;border: 1px solid #eeeeee;height: 24px;"/>
+                        </div>
+                        <div style="float:right;">
+                            <span style="font-size:14px;margin:4px 5px 0 5px;color:#333;">高度：</span>
+                            <input id="${height}" class="left" style="width: 60px;border: 1px solid #eeeeee;height: 24px;"/>
+                        </div>
+                    </div>
+                    <div class="w-e-button-container" style="border-bottom:1px solid #f1f1f1;padding-bottom:5px;margin-bottom:5px;">
                         <span style="float:left;font-size:14px;margin:4px 5px 0 5px;color:#333;">最大宽度：</span>
-                        <button id="${width30}" class="left">30%</button>
-                        <button id="${width50}" class="left">50%</button>
-                        <button id="${width100}" class="left">100%</button>
+                        <button id="${max30}" class="left">30%</button>
+                        <button id="${max30}" class="left">50%</button>
+                        <button id="${max30}" class="left">100%</button>
                     </div>
                     <div class="w-e-button-container">
                         <button id="${delBtn}" class="gray left">删除图片</button>
@@ -60,7 +75,7 @@ Image.prototype = {
                 </div>`,
                 events: [
                     {
-                        selector: '#' + width30,
+                        selector: '#' + max30,
                         type: 'click',
                         fn: () => {
                             const $img = editor._selectedImg
@@ -72,7 +87,7 @@ Image.prototype = {
                         }
                     },
                     {
-                        selector: '#' + width50,
+                        selector: '#' + max30,
                         type: 'click',
                         fn: () => {
                             const $img = editor._selectedImg
@@ -84,7 +99,7 @@ Image.prototype = {
                         }
                     },
                     {
-                        selector: '#' + width100,
+                        selector: '#' + max30,
                         type: 'click',
                         fn: () => {
                             const $img = editor._selectedImg
@@ -93,6 +108,32 @@ Image.prototype = {
                             }
                             // 返回 true，表示该事件执行完之后，panel 要关闭。否则 panel 不会关闭
                             return true
+                        }
+                    },
+                    {
+                        selector: '#' + width,
+                        type: 'input propertychange',
+                        fn: () => {
+                            const widthNum = $('#' + width).val()
+                            const $img = editor._selectedImg
+                            if ($img) {
+                                $img.css('width', widthNum+'px')
+                            }
+                            // 返回 true，表示该事件执行完之后，panel 要关闭。否则 panel 不会关闭
+                            return false
+                        }
+                    },
+                    {
+                        selector: '#' + height,
+                        type: 'input propertychange',
+                        fn: () => {
+                            const heightNum = $('#' + height).val()
+                            const $img = editor._selectedImg
+                            if ($img) {
+                                $img.css('height', heightNum+'px')
+                            }
+                            // 返回 true，表示该事件执行完之后，panel 要关闭。否则 panel 不会关闭
+                            return false
                         }
                     },
                     {
@@ -188,7 +229,7 @@ Image.prototype = {
             {
                 title: '网络图片',
                 tpl: `<div>
-                    <input id="${linkUrlId}" type="text" class="block" placeholder="图片链接"/></td>
+                    <input id="${linkUrlId}" type="text" class="block" placeholder="图片链接" value="http://192.168.0.16:8080/static/733705e4/images/headshot.png"/></td>
                     <div class="w-e-button-container">
                         <button id="${linkBtnId}" class="right">插入</button>
                     </div>
