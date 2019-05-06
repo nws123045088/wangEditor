@@ -4027,7 +4027,7 @@ UploadImg.prototype = {
         var editor = this.editor;
         var debug = editor.config.debug;
         var customAlert = editor.config.customAlert;
-
+        alertInfo = replaceLang(editor, alertInfo);
         if (debug) {
             throw new Error('wangEditor: ' + (debugInfo || alertInfo));
         } else {

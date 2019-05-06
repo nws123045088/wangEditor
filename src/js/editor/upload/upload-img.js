@@ -5,6 +5,7 @@
 import { objForEach, arrForEach, percentFormat } from '../../util/util.js'
 import Progress from './progress.js'
 import { UA } from '../../util/util.js'
+import replaceLang from '../../util/replace-lang.js'
 
 // 构造函数
 function UploadImg(editor) {
@@ -20,7 +21,7 @@ UploadImg.prototype = {
         const editor = this.editor
         const debug = editor.config.debug
         const customAlert = editor.config.customAlert
-
+        alertInfo = replaceLang(editor, alertInfo)
         if (debug) {
             throw new Error('wangEditor: ' + (debugInfo || alertInfo))
         } else {
