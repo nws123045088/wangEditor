@@ -137,13 +137,15 @@ UploadImg.prototype = {
             // 验证通过的加入结果列表
             resultFiles.push(file)
         })
-        // 抛出验证信息
-        if (errInfo.length) {
-            this._alert('图片验证未通过: \n' + errInfo.join('\n'))
-            return
-        }
+
         if (resultFiles.length > maxLength) {
             this._alert('一次最多上传' + maxLength + '张图片')
+            return
+        }
+
+        // 抛出验证信息
+        if (errInfo.length) {
+            this._alert(errInfo.join('\n'))
             return
         }
 

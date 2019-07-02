@@ -182,24 +182,46 @@ Image.prototype = {
         const linkUrlId = getRandom('link-url')
         const linkBtnId = getRandom('link-btn')
 
+        const upcheckId=getRandom('upcheckId')
+
         // tabs 的配置
         const tabsConfig = [
             {
                 title: '上传图片',
                 tpl: `<div class="w-e-up-img-container">
-                    <div id="${upTriggerId}" class="w-e-up-btn">
-                        <i class="w-e-icon-upload2"></i>
-                    </div>
-                    <div style="display:none;">
-                        <input id="${upFileId}" type="file" multiple="multiple" accept="image/jpg,image/jpeg,image/png,image/gif,image/bmp"/>
-                    </div>
+                        <div id="${upTriggerId}" class="w-e-up-btn">
+                            <i class="w-e-icon-upload2"></i>
+                        </div>
+                        <div style="width: 100%;">
+                            <div style="width: 10%;float: left;"><input type="checkbox" id="${upcheckId}"></div>
+                            <div style="width: 90%;float: left;margin-bottom: 10px;text-align: left;font-size: 14px;">I certify this picture is of me, by me, or that I have explicit permission to post it on Lovense.</div>
+                        </div>
+                        <div style="display:none;">
+                            <input id="${upFileId}" type="file" multiple="multiple" accept="image/jpg,image/jpeg,image/png,image/gif,image/bmp"/>
+                        </div>
                 </div>`,
                 events: [
+                    {
+                        // 触发选择图片
+                        selector: '#' + upcheckId,
+                        type: 'click',
+                        fn: () => {
+                            if($('#' + upTriggerId).hasClass('active')){
+                                $('#' + upTriggerId).removeClass('active')
+                            }else{
+                                $('#' + upTriggerId).addClass('active')
+                            }
+                            return false
+                        }
+                    },
                     {
                         // 触发选择图片
                         selector: '#' + upTriggerId,
                         type: 'click',
                         fn: () => {
+                            if(!$('#' + upTriggerId).hasClass('active')){
+                                return false
+                            }
                             const $file = $('#' + upFileId)
                             const fileElem = $file[0]
                             if (fileElem) {

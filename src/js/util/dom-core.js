@@ -242,6 +242,29 @@ DomElement.prototype = {
         })
     },
 
+    // has class
+    hasClass: function (className) {
+        if (!className) {
+            return false
+        }
+        var result=false
+        this.forEach(elem => {
+            let arr
+            if (elem.className) {
+                // 解析当前 className 转换为数组
+                arr = elem.className.split(/\s/)
+                arr.forEach(item => {
+                    if(!result){
+                        item = item.trim()
+                        if (item && item === className) {
+                            result=true
+                        }
+                    }
+                })
+            }
+        })
+        return result
+    },
     // 修改 css
     css: function (key, val) {
         const currentStyle = `${key}:${val};`

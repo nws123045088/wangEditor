@@ -326,11 +326,11 @@
   *display: inline;
   *zoom: 1;
   color: #999;
-  cursor: pointer;
   font-size: 60px;
   line-height: 1;
 }
-.w-e-text-container .w-e-panel-container .w-e-up-img-container .w-e-up-btn:hover {
+.w-e-text-container .w-e-panel-container .w-e-up-img-container .w-e-up-btn.active {
+  cursor: pointer;
   color: #333;
 }
 

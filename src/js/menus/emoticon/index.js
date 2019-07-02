@@ -79,7 +79,8 @@ Emoticon.prototype = {
                                 insertHtml = $target.parent().html()
                             } else {
                                 // 插入 emoji
-                                insertHtml = '<span>' + $target.html() + '</span>'
+                                // insertHtml = '<span>' + $target.html() + '</span>'
+                                insertHtml = $target.html()
                             }
 
                             this._insert(insertHtml)
